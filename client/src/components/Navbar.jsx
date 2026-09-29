@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Trophy, Shield, Users, Calendar, MapPin, Activity, FileText, Database, LogIn, LogOut, LayoutDashboard, Search, Menu, X, Zap } from 'lucide-react';
+import { Trophy, Shield, Users, Calendar, MapPin, Activity, FileText, Database, LogIn, LogOut, LayoutDashboard, Search, Menu, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
@@ -11,15 +11,17 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const navLinks = [
-    { name: 'Sports', path: '/sports', icon: Trophy },
-    { name: 'Teams', path: '/teams', icon: Shield },
-    { name: 'Players', path: '/players', icon: Users },
-    { name: 'Tournaments', path: '/tournaments', icon: Calendar },
-    { name: 'Matches', path: '/matches', icon: Activity },
-    { name: 'Venues', path: '/venues', icon: MapPin },
-    { name: 'Reports', path: '/reports', icon: FileText },
-    { name: 'DB Insights', path: '/database-insights', icon: Database },
+    { name: 'Sports', path: '/sports', icon: Trophy, requiresAuth: true },
+    { name: 'Teams', path: '/teams', icon: Shield, requiresAuth: true },
+    { name: 'Players', path: '/players', icon: Users, requiresAuth: true },
+    { name: 'Tournaments', path: '/tournaments', icon: Calendar, requiresAuth: true },
+    { name: 'Matches', path: '/matches', icon: Activity, requiresAuth: true },
+    { name: 'Venues', path: '/venues', icon: MapPin, requiresAuth: true },
+    { name: 'Reports', path: '/reports', icon: FileText, requiresAuth: true },
+    { name: 'DB Insights', path: '/database-insights', icon: Database, requiresAuth: false },
   ];
+
+  const visibleNavLinks = navLinks.filter((link) => !link.requiresAuth || user);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -49,9 +51,9 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links (Only shown when logged in or for public DB Insights) */}
           <nav className="hidden lg:flex items-center space-x-1">
-            {navLinks.map((link) => {
+            {visibleNavLinks.map((link) => {
               const Icon = link.icon;
               const isActive = location.pathname === link.path;
               return (
@@ -146,7 +148,7 @@ export default function Navbar() {
           </form>
 
           <div className="grid grid-cols-2 gap-2">
-            {navLinks.map((link) => {
+            {visibleNavLinks.map((link) => {
               const Icon = link.icon;
               return (
                 <Link
