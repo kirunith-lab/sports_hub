@@ -235,14 +235,36 @@ export default function ManageTeams() {
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Logo Image URL</label>
-              <input
-                type="url"
-                value={formData.logo_url}
-                onChange={(e) => setFormData({ ...formData, logo_url: e.target.value })}
-                className="w-full bg-slate-900 text-xs text-slate-100 px-3 py-2 rounded-xl border border-slate-700"
-                placeholder="https://..."
-              />
+              <label className="block text-xs font-semibold text-slate-300 mb-1">Team Logo (Upload or Paste URL)</label>
+              <div className="space-y-2">
+                <input
+                  type="text"
+                  value={formData.logo_url}
+                  onChange={(e) => setFormData({ ...formData, logo_url: e.target.value })}
+                  className="w-full bg-slate-900 text-xs text-slate-100 px-3 py-2 rounded-xl border border-slate-700"
+                  placeholder="Paste Image URL (https://...)"
+                />
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                          setFormData({ ...formData, logo_url: reader.result });
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                    className="block w-full text-xs text-slate-400 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-lime-400/20 file:text-lime-400 hover:file:bg-lime-400/30"
+                  />
+                  {formData.logo_url && (
+                    <img src={formData.logo_url} alt="Preview" className="w-9 h-9 rounded-lg object-cover border border-slate-700 shrink-0" />
+                  )}
+                </div>
+              </div>
             </div>
           </div>
 
