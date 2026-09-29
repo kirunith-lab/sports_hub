@@ -43,7 +43,7 @@ INSERT INTO sports (sport_id, name, description, category, icon_name) VALUES
 -- 3. TEAMS
 -- ----------------------------------------------------------------------------
 INSERT INTO teams (team_id, sport_id, team_name, country, city, founded_year, logo_url) VALUES
-(1, 1, 'Mumbai Indians', 'India', 'Mumbai', 2008, 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=400&q=80'),
+(1, 1, 'Mumbai Indians', 'India', 'Mumbai', 2008, 'https://images.unsplash.com/photo-1624526267942-ab0ff8a3e972?auto=format&fit=crop&w=400&q=80'),
 (2, 1, 'Chennai Super Kings', 'India', 'Chennai', 2008, 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=400&q=80'),
 (3, 1, 'Royal Challengers Bengaluru', 'India', 'Bengaluru', 2008, 'https://images.unsplash.com/photo-1562077772-3bd90403f7f0?auto=format&fit=crop&w=400&q=80'),
 (4, 1, 'Australia National Team', 'Australia', 'Sydney', 1877, 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=400&q=80'),
@@ -57,16 +57,16 @@ INSERT INTO teams (team_id, sport_id, team_name, country, city, founded_year, lo
 -- 4. PLAYERS
 -- ----------------------------------------------------------------------------
 INSERT INTO players (player_id, sport_id, name, date_of_birth, nationality, gender, position, email, contact_number, status, profile_image_url) VALUES
-(1, 1, 'Rohit Sharma', '1987-04-30', 'India', 'Male', 'Right-handed Batsman', 'rohit@mi.com', '+91 9876543210', 'Active', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'),
-(2, 1, 'Jasprit Bumrah', '1993-12-06', 'India', 'Male', 'Fast Bowler', 'bumrah@mi.com', '+91 9876543211', 'Active', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80'),
-(3, 1, 'MS Dhoni', '1981-07-07', 'India', 'Male', 'Wicketkeeper Batsman', 'dhoni@csk.com', '+91 9876543212', 'Active', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80'),
-(4, 1, 'Ravindra Jadeja', '1988-12-06', 'India', 'Male', 'All-Rounder', 'jadeja@csk.com', '+91 9876543213', 'Active', 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80'),
-(5, 1, 'Virat Kohli', '1988-11-05', 'India', 'Male', 'Top-order Batsman', 'kohli@rcb.com', '+91 9876543214', 'Active', 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80'),
-(7, 2, 'Jude Bellingham', '2003-06-29', 'England', 'Male', 'Midfielder', 'jude@realmadrid.com', '+34 612345678', 'Active', 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80'),
-(8, 2, 'Vinicius Junior', '2000-07-12', 'Brazil', 'Male', 'Winger', 'vini@realmadrid.com', '+34 612345679', 'Active', 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=400&q=80'),
-(9, 2, 'Robert Lewandowski', '1988-08-21', 'Poland', 'Male', 'Striker', 'lewy@barca.com', '+34 612345680', 'Active', 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=400&q=80'),
-(13, 3, 'LeBron James', '1984-12-30', 'USA', 'Male', 'Small Forward', 'kingjames@lakers.com', '+1 2135550199', 'Active', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80'),
-(14, 3, 'Stephen Curry', '1988-03-14', 'USA', 'Male', 'Point Guard', 'curry@warriors.com', '+1 4155550188', 'Active', 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80');
+(1, 1, 'Rohit Sharma', '1987-04-30', 'India', 'Male', 'Right-handed Batsman', 'rohit@mi.com', '+91 9876543210', 'Active', 'https://images.unsplash.com/photo-1624526267942-ab0ff8a3e972?auto=format&fit=crop&w=400&q=80'),
+(2, 1, 'Jasprit Bumrah', '1993-12-06', 'India', 'Male', 'Fast Bowler', 'bumrah@mi.com', '+91 9876543211', 'Active', 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=400&q=80'),
+(3, 1, 'MS Dhoni', '1981-07-07', 'India', 'Male', 'Wicketkeeper Batsman', 'dhoni@csk.com', '+91 9876543212', 'Active', 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=400&q=80'),
+(4, 1, 'Ravindra Jadeja', '1988-12-06', 'India', 'Male', 'All-Rounder', 'jadeja@csk.com', '+91 9876543213', 'Active', 'https://images.unsplash.com/photo-1512719994953-eabf50895df7?auto=format&fit=crop&w=400&q=80'),
+(5, 1, 'Virat Kohli', '1988-11-05', 'India', 'Male', 'Top-order Batsman', 'kohli@rcb.com', '+91 9876543214', 'Active', 'https://images.unsplash.com/photo-1512719994953-eabf50895df7?auto=format&fit=crop&w=400&q=80'),
+(7, 2, 'Jude Bellingham', '2003-06-29', 'England', 'Male', 'Midfielder', 'jude@realmadrid.com', '+34 612345678', 'Active', 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=400&q=80'),
+(8, 2, 'Vinicius Junior', '2000-07-12', 'Brazil', 'Male', 'Winger', 'vini@realmadrid.com', '+34 612345679', 'Active', 'https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=400&q=80'),
+(9, 2, 'Robert Lewandowski', '1988-08-21', 'Poland', 'Male', 'Striker', 'lewy@barca.com', '+34 612345680', 'Active', 'https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=400&q=80'),
+(13, 3, 'LeBron James', '1984-12-30', 'USA', 'Male', 'Small Forward', 'kingjames@lakers.com', '+1 2135550199', 'Active', 'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=400&q=80'),
+(14, 3, 'Stephen Curry', '1988-03-14', 'USA', 'Male', 'Point Guard', 'curry@warriors.com', '+1 4155550188', 'Active', 'https://images.unsplash.com/photo-1519766304817-4f37bda74a29?auto=format&fit=crop&w=400&q=80');
 
 -- ----------------------------------------------------------------------------
 -- 5. COACHES
