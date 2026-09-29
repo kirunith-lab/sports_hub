@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Trophy, Shield, Users, Calendar, MapPin, BarChart3, LogIn, LogOut, LayoutDashboard, Search, Menu, X, Activity } from 'lucide-react';
+import { Trophy, Shield, Users, Calendar, MapPin, BarChart3, LogIn, LogOut, LayoutDashboard, Search, Menu, X, Activity, FileText, Database } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
@@ -17,7 +17,8 @@ export default function Navbar() {
     { name: 'Tournaments', path: '/tournaments', icon: Calendar },
     { name: 'Matches', path: '/matches', icon: Activity },
     { name: 'Venues', path: '/venues', icon: MapPin },
-    { name: 'Statistics', path: '/statistics', icon: BarChart3 },
+    { name: 'Reports', path: '/reports', icon: FileText },
+    { name: 'DB Insights', path: '/database-insights', icon: Database },
   ];
 
   const handleSearchSubmit = (e) => {
@@ -57,13 +58,13 @@ export default function Navbar() {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
                     isActive
                       ? 'bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 shadow-inner'
                       : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-3.5 h-3.5" />
                   <span>{link.name}</span>
                 </Link>
               );
@@ -71,7 +72,7 @@ export default function Navbar() {
           </nav>
 
           {/* Search Bar & User / Admin Controls */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-3">
             {/* Global Search Bar */}
             <form onSubmit={handleSearchSubmit} className="relative">
               <input
@@ -79,9 +80,9 @@ export default function Navbar() {
                 placeholder="Search players, teams..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-48 lg:w-56 bg-slate-900/90 text-sm text-slate-100 pl-9 pr-3 py-1.5 rounded-full border border-slate-700/80 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-slate-500"
+                className="w-40 lg:w-48 bg-slate-900/90 text-xs text-slate-100 pl-8 pr-3 py-1.5 rounded-full border border-slate-700/80 focus:outline-none focus:border-indigo-500 transition-all placeholder:text-slate-500"
               />
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2" />
             </form>
 
             {user ? (
@@ -102,7 +103,7 @@ export default function Navbar() {
                 <button
                   onClick={logout}
                   title="Logout"
-                  className="p-2 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors"
+                  className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
@@ -110,7 +111,7 @@ export default function Navbar() {
             ) : (
               <Link
                 to="/login"
-                className="flex items-center space-x-1.5 px-4 py-2 rounded-lg text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-500 transition-all shadow-md shadow-indigo-600/20"
+                className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-500 transition-all shadow-md shadow-indigo-600/20"
               >
                 <LogIn className="w-4 h-4" />
                 <span>Login</span>
@@ -139,9 +140,9 @@ export default function Navbar() {
               placeholder="Search players, teams..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-900 text-sm text-slate-100 pl-9 pr-3 py-2 rounded-lg border border-slate-700"
+              className="w-full bg-slate-900 text-xs text-slate-100 pl-8 pr-3 py-2 rounded-lg border border-slate-700"
             />
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5" />
           </form>
 
           <div className="grid grid-cols-2 gap-2">
@@ -152,7 +153,7 @@ export default function Navbar() {
                   key={link.path}
                   to={link.path}
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-800"
+                  className="flex items-center space-x-2 px-3 py-2 rounded-lg text-xs text-slate-300 hover:bg-slate-800"
                 >
                   <Icon className="w-4 h-4 text-indigo-400" />
                   <span>{link.name}</span>
@@ -165,8 +166,8 @@ export default function Navbar() {
             {user ? (
               <>
                 <div>
-                  <span className="block text-sm font-semibold">{user.name}</span>
-                  <span className="text-xs text-slate-400 uppercase">{user.role}</span>
+                  <span className="block text-xs font-semibold">{user.name}</span>
+                  <span className="text-[10px] text-slate-400 uppercase">{user.role}</span>
                 </div>
                 <div className="flex space-x-2">
                   {isAdmin && (
@@ -193,7 +194,7 @@ export default function Navbar() {
               <Link
                 to="/login"
                 onClick={() => setMobileOpen(false)}
-                className="w-full text-center py-2 bg-indigo-600 text-white rounded-lg text-sm font-semibold"
+                className="w-full text-center py-2 bg-indigo-600 text-white rounded-lg text-xs font-semibold"
               >
                 Login to SportsHub
               </Link>

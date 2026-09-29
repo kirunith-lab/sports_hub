@@ -17,6 +17,8 @@ import Matches from './pages/Matches';
 import MatchDetail from './pages/MatchDetail';
 import Venues from './pages/Venues';
 import Statistics from './pages/Statistics';
+import Reports from './pages/Reports';
+import DatabaseInsights from './pages/DatabaseInsights';
 import Login from './pages/Login';
 
 // Admin Pages
@@ -27,6 +29,7 @@ import ManageTeams from './pages/admin/ManageTeams';
 import ManagePlayers from './pages/admin/ManagePlayers';
 import ManageCoaches from './pages/admin/ManageCoaches';
 import ManageTournaments from './pages/admin/ManageTournaments';
+import ManageRegistrations from './pages/admin/ManageRegistrations';
 import ManageVenues from './pages/admin/ManageVenues';
 import ManageMatches from './pages/admin/ManageMatches';
 import ManageStatistics from './pages/admin/ManageStatistics';
@@ -53,6 +56,8 @@ export default function App() {
           <Route path="/matches/:id" element={<MatchDetail />} />
           <Route path="/venues" element={<Venues />} />
           <Route path="/statistics" element={<Statistics />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/database-insights" element={<DatabaseInsights />} />
           <Route path="/login" element={<Login />} />
 
           {/* Admin Protected Routes */}
@@ -63,6 +68,7 @@ export default function App() {
             <Route path="players" element={<ManagePlayers />} />
             <Route path="coaches" element={<ManageCoaches />} />
             <Route path="tournaments" element={<ManageTournaments />} />
+            <Route path="registrations" element={<ManageRegistrations />} />
             <Route path="venues" element={<ManageVenues />} />
             <Route path="matches" element={<ManageMatches />} />
             <Route path="statistics" element={<ManageStatistics />} />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { 
-  LayoutDashboard, Trophy, Shield, Users, UserCheck, Calendar, MapPin, Activity, BarChart2, UserCog, ArrowLeft, LogOut
+  LayoutDashboard, Trophy, Shield, Users, UserCheck, Calendar, MapPin, Activity, BarChart2, UserCog, ArrowLeft, LogOut, FileCheck, Database
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -29,10 +29,12 @@ export default function AdminLayout() {
     { name: 'Manage Players', path: '/admin/players', icon: Users },
     { name: 'Manage Coaches', path: '/admin/coaches', icon: UserCheck },
     { name: 'Manage Tournaments', path: '/admin/tournaments', icon: Calendar },
+    { name: 'Manage Registrations', path: '/admin/registrations', icon: FileCheck },
     { name: 'Manage Venues', path: '/admin/venues', icon: MapPin },
     { name: 'Manage Matches', path: '/admin/matches', icon: Activity },
     { name: 'Manage Statistics', path: '/admin/statistics', icon: BarChart2 },
     { name: 'Manage Users', path: '/admin/users', icon: UserCog },
+    { name: 'DB Insights & SQL', path: '/database-insights', icon: Database }
   ];
 
   return (
@@ -59,7 +61,7 @@ export default function AdminLayout() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                  className={`flex items-center space-x-3 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
                     isActive
                       ? 'bg-gradient-to-r from-amber-500/20 to-indigo-600/20 text-amber-300 border border-amber-500/30'
                       : 'text-slate-400 hover:text-white hover:bg-slate-900'

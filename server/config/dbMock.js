@@ -10,15 +10,12 @@ let nextIds = {
   players: 30,
   coaches: 10,
   tournaments: 10,
+  registrations: 20,
   venues: 10,
   matches: 10,
   player_statistics: 20,
   team_statistics: 20
 };
-
-// Standard pre-computed hashes:
-// admin123 -> $2a$10$YTyzBG1DDruPcW3XzQs4ZOcnAifCXN60mT65KfibHb6Q6MVrId2hK
-// user123  -> $2a$10$SmjzRU.w18HKqqzWzg9oyeljfZ4NdDfjMfNUNsJZWx18K5TWZWpBq
 
 let mockDb = {
   users: [
@@ -57,13 +54,13 @@ let mockDb = {
   ],
 
   players: [
-    { player_id: 1, sport_id: 1, name: 'Rohit Sharma', date_of_birth: '1987-04-30', nationality: 'India', gender: 'Male', position: 'Right-handed Batsman', profile_image_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' },
-    { player_id: 2, sport_id: 1, name: 'Jasprit Bumrah', date_of_birth: '1993-12-06', nationality: 'India', gender: 'Male', position: 'Fast Bowler', profile_image_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80' },
-    { player_id: 3, sport_id: 1, name: 'MS Dhoni', date_of_birth: '1981-07-07', nationality: 'India', gender: 'Male', position: 'Wicketkeeper Batsman', profile_image_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80' },
-    { player_id: 5, sport_id: 1, name: 'Virat Kohli', date_of_birth: '1988-11-05', nationality: 'India', gender: 'Male', position: 'Top-order Batsman', profile_image_url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80' },
-    { player_id: 7, sport_id: 2, name: 'Jude Bellingham', date_of_birth: '2003-06-29', nationality: 'England', gender: 'Male', position: 'Midfielder', profile_image_url: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80' },
-    { player_id: 8, sport_id: 2, name: 'Vinicius Junior', date_of_birth: '2000-07-12', nationality: 'Brazil', gender: 'Male', position: 'Winger', profile_image_url: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=400&q=80' },
-    { player_id: 13, sport_id: 3, name: 'LeBron James', date_of_birth: '1984-12-30', nationality: 'USA', gender: 'Male', position: 'Small Forward', profile_image_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80' }
+    { player_id: 1, sport_id: 1, name: 'Rohit Sharma', date_of_birth: '1987-04-30', nationality: 'India', gender: 'Male', position: 'Right-handed Batsman', email: 'rohit@mi.com', contact_number: '+91 9876543210', status: 'Active', profile_image_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' },
+    { player_id: 2, sport_id: 1, name: 'Jasprit Bumrah', date_of_birth: '1993-12-06', nationality: 'India', gender: 'Male', position: 'Fast Bowler', email: 'bumrah@mi.com', contact_number: '+91 9876543211', status: 'Active', profile_image_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80' },
+    { player_id: 3, sport_id: 1, name: 'MS Dhoni', date_of_birth: '1981-07-07', nationality: 'India', gender: 'Male', position: 'Wicketkeeper Batsman', email: 'dhoni@csk.com', contact_number: '+91 9876543212', status: 'Active', profile_image_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80' },
+    { player_id: 5, sport_id: 1, name: 'Virat Kohli', date_of_birth: '1988-11-05', nationality: 'India', gender: 'Male', position: 'Top-order Batsman', email: 'kohli@rcb.com', contact_number: '+91 9876543214', status: 'Active', profile_image_url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80' },
+    { player_id: 7, sport_id: 2, name: 'Jude Bellingham', date_of_birth: '2003-06-29', nationality: 'England', gender: 'Male', position: 'Midfielder', email: 'jude@realmadrid.com', contact_number: '+34 612345678', status: 'Active', profile_image_url: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80' },
+    { player_id: 8, sport_id: 2, name: 'Vinicius Junior', date_of_birth: '2000-07-12', nationality: 'Brazil', gender: 'Male', position: 'Winger', email: 'vini@realmadrid.com', contact_number: '+34 612345679', status: 'Active', profile_image_url: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=400&q=80' },
+    { player_id: 13, sport_id: 3, name: 'LeBron James', date_of_birth: '1984-12-30', nationality: 'USA', gender: 'Male', position: 'Small Forward', email: 'kingjames@lakers.com', contact_number: '+1 2135550199', status: 'Active', profile_image_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80' }
   ],
 
   coaches: [
@@ -83,8 +80,16 @@ let mockDb = {
   ],
 
   tournaments: [
-    { tournament_id: 1, sport_id: 1, tournament_name: 'Indian Premier League 2026', start_date: '2026-03-20', end_date: '2026-05-30', location: 'India', status: 'Ongoing' },
-    { tournament_id: 2, sport_id: 2, tournament_name: 'UEFA Champions League 2026', start_date: '2025-09-15', end_date: '2026-06-01', location: 'Europe', status: 'Ongoing' }
+    { tournament_id: 1, sport_id: 1, tournament_name: 'Indian Premier League 2026', start_date: '2026-03-20', end_date: '2026-05-30', location: 'India', max_teams: 10, status: 'Ongoing', description: 'Premier Twenty20 cricket league featuring franchise teams.' },
+    { tournament_id: 2, sport_id: 2, tournament_name: 'UEFA Champions League 2026', start_date: '2025-09-15', end_date: '2026-06-01', location: 'Europe', max_teams: 32, status: 'Ongoing', description: 'Europe premier club football tournament.' }
+  ],
+
+  registrations: [
+    { registration_id: 1, tournament_id: 1, team_id: 1, registration_date: '2026-01-10', status: 'Approved', notes: 'Official franchise registration confirmed' },
+    { registration_id: 2, tournament_id: 1, team_id: 2, registration_date: '2026-01-12', status: 'Approved', notes: 'Official franchise registration confirmed' },
+    { registration_id: 3, tournament_id: 1, team_id: 3, registration_date: '2026-01-15', status: 'Approved', notes: 'Official franchise registration confirmed' },
+    { registration_id: 4, tournament_id: 2, team_id: 5, registration_date: '2025-08-01', status: 'Approved', notes: 'Qualified automatically via league title' },
+    { registration_id: 5, tournament_id: 2, team_id: 6, registration_date: '2025-08-02', status: 'Approved', notes: 'Qualified automatically via league standing' }
   ],
 
   venues: [
@@ -94,10 +99,10 @@ let mockDb = {
   ],
 
   matches: [
-    { match_id: 1, tournament_id: 1, sport_id: 1, team1_id: 1, team2_id: 2, venue_id: 1, match_date: '2026-03-25', match_time: '19:30:00', team1_score: 185, team2_score: 180, status: 'Completed', winner_team_id: 1 },
-    { match_id: 2, tournament_id: 1, sport_id: 1, team1_id: 2, team2_id: 3, venue_id: 2, match_date: '2026-03-28', match_time: '19:30:00', team1_score: 195, team2_score: 192, status: 'Completed', winner_team_id: 2 },
-    { match_id: 3, tournament_id: 1, sport_id: 1, team1_id: 1, team2_id: 3, venue_id: 1, match_date: '2026-10-05', match_time: '19:30:00', team1_score: 0, team2_score: 0, status: 'Scheduled', winner_team_id: null },
-    { match_id: 4, tournament_id: 2, sport_id: 2, team1_id: 5, team2_id: 6, venue_id: 3, match_date: '2026-04-10', match_time: '21:00:00', team1_score: 3, team2_score: 2, status: 'Completed', winner_team_id: 5 }
+    { match_id: 1, tournament_id: 1, sport_id: 1, team1_id: 1, team2_id: 2, venue_id: 1, match_date: '2026-03-25', match_time: '19:30:00', team1_score: 185, team2_score: 180, status: 'Completed', winner_team_id: 1, man_of_match_player_id: 1 },
+    { match_id: 2, tournament_id: 1, sport_id: 1, team1_id: 2, team2_id: 3, venue_id: 2, match_date: '2026-03-28', match_time: '19:30:00', team1_score: 195, team2_score: 192, status: 'Completed', winner_team_id: 2, man_of_match_player_id: 3 },
+    { match_id: 3, tournament_id: 1, sport_id: 1, team1_id: 1, team2_id: 3, venue_id: 1, match_date: '2026-10-05', match_time: '19:30:00', team1_score: 0, team2_score: 0, status: 'Scheduled', winner_team_id: null, man_of_match_player_id: null },
+    { match_id: 4, tournament_id: 2, sport_id: 2, team1_id: 5, team2_id: 6, venue_id: 3, match_date: '2026-04-10', match_time: '21:00:00', team1_score: 3, team2_score: 2, status: 'Completed', winner_team_id: 5, man_of_match_player_id: 8 }
   ],
 
   player_statistics: [
@@ -117,30 +122,83 @@ let mockDb = {
   ]
 };
 
-// Helper to query helper functions
+// Helper query function
 const executeMockQuery = async (sql, params = []) => {
   const normalizedSql = sql.trim().toLowerCase();
 
-  // 1. SELECT USERS by email
+  // 1. SELECT REGISTRATIONS
+  if (normalizedSql.includes('from registrations r')) {
+    const regList = mockDb.registrations.map((r) => {
+      const tournament = mockDb.tournaments.find((tr) => tr.tournament_id === r.tournament_id);
+      const sport = tournament ? mockDb.sports.find((s) => s.sport_id === tournament.sport_id) : null;
+      const team = mockDb.teams.find((t) => t.team_id === r.team_id);
+      return {
+        ...r,
+        tournament_name: tournament ? tournament.tournament_name : '',
+        sport_name: sport ? sport.name : '',
+        team_name: team ? team.team_name : '',
+        team_country: team ? team.country : '',
+        team_logo: team ? team.logo_url : ''
+      };
+    });
+    return [regList, []];
+  }
+
+  // 2. INSERT REGISTRATION
+  if (normalizedSql.includes('insert into registrations')) {
+    const newReg = {
+      registration_id: nextIds.registrations++,
+      tournament_id: parseInt(params[0]),
+      team_id: parseInt(params[1]),
+      registration_date: params[2],
+      status: params[3] || 'Approved',
+      notes: params[4] || ''
+    };
+    mockDb.registrations.push(newReg);
+    return [{ insertId: newReg.registration_id, affectedRows: 1 }, []];
+  }
+
+  // 3. UPDATE REGISTRATION
+  if (normalizedSql.includes('update registrations set')) {
+    const status = params[0];
+    const notes = params[1];
+    const id = parseInt(params[2]);
+    const r = mockDb.registrations.find((reg) => reg.registration_id === id);
+    if (r) {
+      r.status = status;
+      r.notes = notes;
+    }
+    return [{ affectedRows: r ? 1 : 0 }, []];
+  }
+
+  // 4. DELETE REGISTRATION
+  if (normalizedSql.includes('delete from registrations where registration_id =')) {
+    const id = parseInt(params[0]);
+    const initLen = mockDb.registrations.length;
+    mockDb.registrations = mockDb.registrations.filter((r) => r.registration_id !== id);
+    return [{ affectedRows: initLen - mockDb.registrations.length }, []];
+  }
+
+  // 5. SELECT USERS by email
   if (normalizedSql.includes('select * from users where email =')) {
     const email = params[0];
     const found = mockDb.users.filter((u) => u.email.toLowerCase() === email.toLowerCase());
     return [found, []];
   }
 
-  // 2. SELECT USER by user_id
+  // 6. SELECT USER by user_id
   if (normalizedSql.includes('select user_id, name, email, role, created_at from users where user_id =')) {
     const id = parseInt(params[0]);
     const found = mockDb.users.filter((u) => u.user_id === id);
     return [found, []];
   }
 
-  // 3. SELECT ALL USERS
+  // 7. SELECT ALL USERS
   if (normalizedSql.includes('select user_id, name, email, role, created_at from users')) {
     return [[...mockDb.users], []];
   }
 
-  // 4. INSERT USER
+  // 8. INSERT USER
   if (normalizedSql.includes('insert into users')) {
     const newUser = {
       user_id: nextIds.users++,
@@ -154,7 +212,7 @@ const executeMockQuery = async (sql, params = []) => {
     return [{ insertId: newUser.user_id, affectedRows: 1 }, []];
   }
 
-  // 5. UPDATE USER ROLE
+  // 9. UPDATE USER ROLE
   if (normalizedSql.includes('update users set role =')) {
     const role = params[0];
     const id = parseInt(params[1]);
@@ -163,7 +221,7 @@ const executeMockQuery = async (sql, params = []) => {
     return [{ affectedRows: u ? 1 : 0 }, []];
   }
 
-  // 6. DELETE USER
+  // 10. DELETE USER
   if (normalizedSql.includes('delete from users where user_id =')) {
     const id = parseInt(params[0]);
     const initLen = mockDb.users.length;
@@ -171,7 +229,7 @@ const executeMockQuery = async (sql, params = []) => {
     return [{ affectedRows: initLen - mockDb.users.length }, []];
   }
 
-  // 7. GET ALL SPORTS
+  // 11. GET ALL SPORTS
   if (normalizedSql.includes('from sports s') || normalizedSql.includes('from sports')) {
     const sportsList = mockDb.sports.map((s) => {
       const teamsCount = mockDb.teams.filter((t) => t.sport_id === s.sport_id).length;
@@ -187,14 +245,14 @@ const executeMockQuery = async (sql, params = []) => {
     return [sportsList, []];
   }
 
-  // 8. GET SPORT BY ID
+  // 12. GET SPORT BY ID
   if (normalizedSql.includes('select * from sports where sport_id =')) {
     const id = parseInt(params[0]);
     const found = mockDb.sports.filter((s) => s.sport_id === id);
     return [found, []];
   }
 
-  // 9. INSERT SPORT
+  // 13. INSERT SPORT
   if (normalizedSql.includes('insert into sports')) {
     const newSport = {
       sport_id: nextIds.sports++,
@@ -207,7 +265,7 @@ const executeMockQuery = async (sql, params = []) => {
     return [{ insertId: newSport.sport_id, affectedRows: 1 }, []];
   }
 
-  // 10. UPDATE SPORT
+  // 14. UPDATE SPORT
   if (normalizedSql.includes('update sports set')) {
     const id = parseInt(params[params.length - 1]);
     const s = mockDb.sports.find((sp) => sp.sport_id === id);
@@ -220,14 +278,14 @@ const executeMockQuery = async (sql, params = []) => {
     return [{ affectedRows: s ? 1 : 0 }, []];
   }
 
-  // 11. DELETE SPORT
+  // 15. DELETE SPORT
   if (normalizedSql.includes('delete from sports where sport_id =')) {
     const id = parseInt(params[0]);
     mockDb.sports = mockDb.sports.filter((sp) => sp.sport_id !== id);
     return [{ affectedRows: 1 }, []];
   }
 
-  // 12. GET TEAMS
+  // 16. GET TEAMS
   if (normalizedSql.includes('from teams t')) {
     const teamsList = mockDb.teams.map((t) => {
       const sport = mockDb.sports.find((s) => s.sport_id === t.sport_id);
@@ -248,7 +306,7 @@ const executeMockQuery = async (sql, params = []) => {
     return [teamsList, []];
   }
 
-  // 13. GET PLAYERS
+  // 17. GET PLAYERS
   if (normalizedSql.includes('from players p')) {
     const playersList = mockDb.players.map((p) => {
       const sport = mockDb.sports.find((s) => s.sport_id === p.sport_id);
@@ -271,7 +329,7 @@ const executeMockQuery = async (sql, params = []) => {
     return [playersList, []];
   }
 
-  // 14. GET COACHES
+  // 18. GET COACHES
   if (normalizedSql.includes('from coaches c')) {
     const coachesList = mockDb.coaches.map((c) => {
       const sport = mockDb.sports.find((s) => s.sport_id === c.sport_id);
@@ -286,12 +344,12 @@ const executeMockQuery = async (sql, params = []) => {
     return [coachesList, []];
   }
 
-  // 15. GET TOURNAMENTS
+  // 19. GET TOURNAMENTS
   if (normalizedSql.includes('from tournaments t')) {
     const tournamentsList = mockDb.tournaments.map((tr) => {
       const sport = mockDb.sports.find((s) => s.sport_id === tr.sport_id);
       const matchesCount = mockDb.matches.filter((m) => m.tournament_id === tr.tournament_id).length;
-      const teamsCount = mockDb.team_statistics.filter((ts) => ts.tournament_id === tr.tournament_id).length;
+      const teamsCount = mockDb.registrations.filter((rg) => rg.tournament_id === tr.tournament_id).length;
       return {
         ...tr,
         sport_name: sport ? sport.name : 'Unknown',
@@ -307,7 +365,7 @@ const executeMockQuery = async (sql, params = []) => {
     return [tournamentsList, []];
   }
 
-  // 16. GET VENUES
+  // 20. GET VENUES
   if (normalizedSql.includes('from venues v')) {
     const venuesList = mockDb.venues.map((v) => {
       const count = mockDb.matches.filter((m) => m.venue_id === v.venue_id).length;
@@ -316,7 +374,7 @@ const executeMockQuery = async (sql, params = []) => {
     return [venuesList, []];
   }
 
-  // 17. GET MATCHES
+  // 21. GET MATCHES
   if (normalizedSql.includes('from matches m')) {
     const matchesList = mockDb.matches.map((m) => {
       const sport = mockDb.sports.find((s) => s.sport_id === m.sport_id);
@@ -325,6 +383,7 @@ const executeMockQuery = async (sql, params = []) => {
       const team1 = mockDb.teams.find((t) => t.team_id === m.team1_id);
       const team2 = mockDb.teams.find((t) => t.team_id === m.team2_id);
       const winner = mockDb.teams.find((t) => t.team_id === m.winner_team_id);
+      const mom = mockDb.players.find((p) => p.player_id === m.man_of_match_player_id);
 
       return {
         ...m,
@@ -339,7 +398,8 @@ const executeMockQuery = async (sql, params = []) => {
         team2_name: team2 ? team2.team_name : '',
         team2_logo: team2 ? team2.logo_url : '',
         team2_country: team2 ? team2.country : '',
-        winner_name: winner ? winner.team_name : null
+        winner_name: winner ? winner.team_name : null,
+        man_of_match_name: mom ? mom.name : null
       };
     });
 
@@ -350,7 +410,7 @@ const executeMockQuery = async (sql, params = []) => {
     return [matchesList, []];
   }
 
-  // 18. GET PLAYER STATS
+  // 22. GET PLAYER STATS
   if (normalizedSql.includes('from player_statistics')) {
     const statsList = mockDb.player_statistics.map((ps) => {
       const player = mockDb.players.find((p) => p.player_id === ps.player_id);
@@ -373,7 +433,7 @@ const executeMockQuery = async (sql, params = []) => {
     return [statsList, []];
   }
 
-  // 19. GET TEAM STATS / STANDINGS
+  // 23. GET TEAM STATS / STANDINGS
   if (normalizedSql.includes('from team_statistics')) {
     const standingsList = mockDb.team_statistics.map((ts) => {
       const team = mockDb.teams.find((t) => t.team_id === ts.team_id);
@@ -389,7 +449,7 @@ const executeMockQuery = async (sql, params = []) => {
     return [standingsList, []];
   }
 
-  // 20. COUNT METRICS DASHBOARD QUERY
+  // 24. COUNT METRICS DASHBOARD QUERY
   if (normalizedSql.includes('select \n        (select count(*) from sports) as total_sports') || normalizedSql.includes('select (select count(*) from sports)')) {
     return [
       [
@@ -397,7 +457,9 @@ const executeMockQuery = async (sql, params = []) => {
           total_sports: mockDb.sports.length,
           total_teams: mockDb.teams.length,
           total_players: mockDb.players.length,
+          total_coaches: mockDb.coaches.length,
           total_tournaments: mockDb.tournaments.length,
+          total_registrations: mockDb.registrations.length,
           total_matches: mockDb.matches.length,
           upcoming_matches: mockDb.matches.filter((m) => m.status === 'Scheduled').length,
           completed_matches: mockDb.matches.filter((m) => m.status === 'Completed').length,

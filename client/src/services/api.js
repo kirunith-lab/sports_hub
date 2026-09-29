@@ -75,6 +75,13 @@ export const tournamentsAPI = {
   delete: (id) => API.delete(`/tournaments/${id}`)
 };
 
+export const registrationsAPI = {
+  getAll: (params) => API.get('/registrations', { params }),
+  create: (data) => API.post('/registrations', data),
+  update: (id, data) => API.put(`/registrations/${id}`, data),
+  delete: (id) => API.delete(`/registrations/${id}`)
+};
+
 export const venuesAPI = {
   getAll: (params) => API.get('/venues', { params }),
   getById: (id) => API.get(`/venues/${id}`),

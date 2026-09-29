@@ -1,6 +1,6 @@
 -- ============================================================================
--- SportsHub Database Schema (MySQL 8.0)
--- DBMS Academic Project - Relational Schema Definition
+-- SportsHub Enhanced Database Schema (MySQL 8.0)
+-- Academic DBMS Project - 3NF Relational Schema Definition
 -- ============================================================================
 
 CREATE DATABASE IF NOT EXISTS sportshub_db;
@@ -9,10 +9,11 @@ USE sportshub_db;
 -- Disable Foreign Key Checks during setup
 SET FOREIGN_KEY_CHECKS = 0;
 
--- Drop tables if they exist (clean setup)
+-- Drop existing tables for clean deployment
 DROP TABLE IF EXISTS player_statistics;
 DROP TABLE IF EXISTS team_statistics;
 DROP TABLE IF EXISTS matches;
+DROP TABLE IF EXISTS registrations;
 DROP TABLE IF EXISTS team_players;
 DROP TABLE IF EXISTS coaches;
 DROP TABLE IF EXISTS players;
@@ -25,8 +26,7 @@ DROP TABLE IF EXISTS users;
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- ----------------------------------------------------------------------------
--- 1. USERS TABLE
--- Entity for system users and administrative accounts
+-- 1. USERS TABLE (Authentication & Administrative Access)
 -- ----------------------------------------------------------------------------
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -39,8 +39,7 @@ CREATE TABLE users (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------------------------------------------------------
--- 2. SPORTS TABLE
--- Core entity for sports categories (Cricket, Football, Basketball, etc.)
+-- 2. SPORTS TABLE (Sport Categories)
 -- ----------------------------------------------------------------------------
 CREATE TABLE sports (
     sport_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -53,8 +52,7 @@ CREATE TABLE sports (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------------------------------------------------------
--- 3. TEAMS TABLE
--- Represents sports teams belonging to a specific sport
+-- 3. TEAMS TABLE (Clubs & Franchise Teams)
 -- ----------------------------------------------------------------------------
 CREATE TABLE teams (
     team_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -72,8 +70,7 @@ CREATE TABLE teams (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------------------------------------------------------
--- 4. PLAYERS TABLE
--- Individual sports athletes belonging to a sport
+-- 4. PLAYERS TABLE (Athletes with Contact & Status)
 -- ----------------------------------------------------------------------------
 CREATE TABLE players (
     player_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -83,6 +80,9 @@ CREATE TABLE players (
     nationality VARCHAR(100) NOT NULL,
     gender ENUM('Male', 'Female', 'Other') NOT NULL DEFAULT 'Male',
     position VARCHAR(80),
+    email VARCHAR(150),
+    contact_number VARCHAR(20),
+    status ENUM('Active', 'Inactive', 'Injured') DEFAULT 'Active',
     profile_image_url VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (sport_id) REFERENCES sports(sport_id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -92,8 +92,7 @@ CREATE TABLE players (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------------------------------------------------------
--- 5. COACHES TABLE
--- Team / Sport coaches and trainers
+-- 5. COACHES TABLE (Head Coaches & Trainers)
 -- ----------------------------------------------------------------------------
 CREATE TABLE coaches (
     coach_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -109,7 +108,7 @@ CREATE TABLE coaches (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------------------------------------------------------
--- 6. TEAM_PLAYERS TABLE (Junction Table for M:N Relationship between Teams and Players)
+-- 6. TEAM_PLAYERS TABLE (M:N Junction Table for Teams and Players)
 -- ----------------------------------------------------------------------------
 CREATE TABLE team_players (
     team_id INT NOT NULL,
@@ -125,8 +124,7 @@ CREATE TABLE team_players (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------------------------------------------------------
--- 7. TOURNAMENTS TABLE
--- Competitions and leagues held for specific sports
+-- 7. TOURNAMENTS TABLE (Leagues & Championships)
 -- ----------------------------------------------------------------------------
 CREATE TABLE tournaments (
     tournament_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -135,7 +133,9 @@ CREATE TABLE tournaments (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     location VARCHAR(150) NOT NULL,
+    max_teams INT DEFAULT 16 CHECK (max_teams > 1),
     status ENUM('Upcoming', 'Ongoing', 'Completed', 'Cancelled') DEFAULT 'Upcoming',
+    description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (sport_id) REFERENCES sports(sport_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT chk_tournament_dates CHECK (end_date >= start_date),
@@ -145,8 +145,25 @@ CREATE TABLE tournaments (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------------------------------------------------------
--- 8. VENUES TABLE
--- Stadiums, arenas, and sports grounds
+-- 8. REGISTRATIONS TABLE (M:N Junction Table for Tournaments and Teams)
+-- ----------------------------------------------------------------------------
+CREATE TABLE registrations (
+    registration_id INT AUTO_INCREMENT PRIMARY KEY,
+    tournament_id INT NOT NULL,
+    team_id INT NOT NULL,
+    registration_date DATE NOT NULL,
+    status ENUM('Pending', 'Approved', 'Rejected') DEFAULT 'Approved',
+    notes VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (tournament_id) REFERENCES tournaments(tournament_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (team_id) REFERENCES teams(team_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT uq_tournament_team_reg UNIQUE (tournament_id, team_id),
+    INDEX idx_reg_tournament (tournament_id),
+    INDEX idx_reg_team (team_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------------------------------------------------------
+-- 9. VENUES TABLE (Stadiums & Grounds)
 -- ----------------------------------------------------------------------------
 CREATE TABLE venues (
     venue_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -161,8 +178,7 @@ CREATE TABLE venues (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------------------------------------------------------
--- 9. MATCHES TABLE
--- Specific fixtures between two teams in a tournament at a venue
+-- 10. MATCHES TABLE (Fixtures & Scores)
 -- ----------------------------------------------------------------------------
 CREATE TABLE matches (
     match_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -177,6 +193,7 @@ CREATE TABLE matches (
     team2_score INT DEFAULT 0,
     status ENUM('Scheduled', 'Live', 'Completed', 'Cancelled') DEFAULT 'Scheduled',
     winner_team_id INT DEFAULT NULL,
+    man_of_match_player_id INT DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (tournament_id) REFERENCES tournaments(tournament_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (sport_id) REFERENCES sports(sport_id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -184,6 +201,7 @@ CREATE TABLE matches (
     FOREIGN KEY (team2_id) REFERENCES teams(team_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (venue_id) REFERENCES venues(venue_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (winner_team_id) REFERENCES teams(team_id) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (man_of_match_player_id) REFERENCES players(player_id) ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT chk_different_teams CHECK (team1_id <> team2_id),
     INDEX idx_matches_date (match_date),
     INDEX idx_matches_tournament (tournament_id),
@@ -192,8 +210,7 @@ CREATE TABLE matches (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------------------------------------------------------
--- 10. PLAYER_STATISTICS TABLE
--- Granular performance stats for individual players in specific matches
+-- 11. PLAYER_STATISTICS TABLE (Granular Match Statistics)
 -- ----------------------------------------------------------------------------
 CREATE TABLE player_statistics (
     stat_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -214,8 +231,7 @@ CREATE TABLE player_statistics (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------------------------------------------------------
--- 11. TEAM_STATISTICS TABLE
--- Accumulated tournament standings & aggregated team statistics
+-- 12. TEAM_STATISTICS TABLE (Tournament Points & Standings)
 -- ----------------------------------------------------------------------------
 CREATE TABLE team_statistics (
     team_stat_id INT AUTO_INCREMENT PRIMARY KEY,
