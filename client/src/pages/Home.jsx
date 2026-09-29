@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Trophy, Shield, Users, Calendar, Activity, ArrowRight, Zap, Award, BarChart3, ChevronRight } from 'lucide-react';
+import { Trophy, Shield, Users, Calendar, Activity, ArrowRight, Zap, Award, BarChart3, ChevronRight, Database, Server, Cpu, CheckCircle2, Lock, FileText, Code } from 'lucide-react';
 import { sportsAPI, matchesAPI, playersAPI, statsAPI } from '../services/api';
 import MatchCard from '../components/MatchCard';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -31,7 +31,7 @@ export default function Home() {
           setTopPlayers(statsRes.charts.topPlayers);
         }
       } catch (err) {
-        console.error('Error fetching Home page data:', err);
+        console.error('Error fetching Landing page data:', err);
       } finally {
         setLoading(false);
       }
@@ -40,82 +40,92 @@ export default function Home() {
     fetchData();
   }, []);
 
-  if (loading) return <LoadingSpinner text="Connecting to MySQL database telemetry..." />;
+  if (loading) return <LoadingSpinner text="Initializing SportsHub database telemetry engine..." />;
 
   return (
     <div className="space-y-16 pb-12">
       
-      {/* Hero Section - Futuristic Sports Command Center */}
+      {/* Hero Section - Next-Gen Futuristic Landing Banner */}
       <section className="relative overflow-hidden rounded-3xl bg-[#101316] border border-white/10 shadow-2xl p-8 sm:p-12 lg:p-16 bg-speed-lines">
-        <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 bg-[#C8FF00]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 -mt-16 -mr-16 w-[30rem] h-[30rem] bg-[#C8FF00]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 -mb-16 -ml-16 w-[30rem] h-[30rem] bg-[#39FF88]/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative max-w-3xl space-y-6">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-[#080A0C] border border-[#C8FF00]/30 text-[#C8FF00] text-xs font-mono font-bold tracking-wider uppercase">
-            <Zap className="w-3.5 h-3.5 text-[#C8FF00] animate-pulse" />
-            <span>Academic DBMS Platform • MySQL 8.0 & 3NF Schema</span>
+        <div className="relative max-w-4xl space-y-6">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#080A0C] border border-[#C8FF00]/40 text-[#C8FF00] text-xs font-mono font-bold tracking-widest uppercase shadow-[0_0_15px_rgba(200,255,0,0.15)]">
+            <Zap className="w-4 h-4 text-[#C8FF00] animate-pulse" />
+            <span>ACADEMIC DBMS PROJECT • MYSQL 8.0 & 3NF SCHEMA</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-black tracking-tight text-white leading-tight uppercase">
-            SPORTS COMMAND <br />
-            <span className="text-[#C8FF00] drop-shadow-[0_0_25px_rgba(200,255,0,0.2)]">
-              CENTER & INTELLIGENCE
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-black tracking-tight text-white leading-none uppercase">
+            SPORTSHUB <br />
+            <span className="text-[#C8FF00] drop-shadow-[0_0_30px_rgba(200,255,0,0.25)]">
+              SPORTS MANAGEMENT SYSTEM
             </span>
           </h1>
 
-          <p className="text-neutral-300 text-base sm:text-lg leading-relaxed font-sans font-normal">
-            Manage players, teams, tournaments, match intelligence, and stadiums—all driven by a normalized 3NF relational database management system.
+          <p className="text-neutral-300 text-base sm:text-lg leading-relaxed font-sans max-w-2xl">
+            A submission-ready Database Management System featuring 12 normalized relational tables, Express REST APIs, JWT role authentication, exportable CSV analytics, and interactive SQL demonstrator console.
           </p>
 
-          <div className="flex flex-wrap gap-4 pt-2 font-mono">
+          <div className="flex flex-wrap gap-4 pt-4 font-mono">
             <Link
-              to="/matches"
-              className="px-6 py-3 rounded-xl bg-[#C8FF00] hover:bg-[#b5e600] text-black font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(200,255,0,0.25)] transition-all flex items-center space-x-2"
+              to="/login"
+              className="px-6 py-3.5 rounded-xl bg-[#C8FF00] hover:bg-[#b5e600] text-black font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(200,255,0,0.3)] transition-all flex items-center space-x-2"
             >
-              <span>Match Center</span>
+              <Lock className="w-4 h-4" />
+              <span>Evaluator Demo Login</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
 
             <Link
               to="/database-insights"
-              className="px-6 py-3 rounded-xl bg-[#080A0C] border border-white/10 text-neutral-200 font-bold text-xs uppercase tracking-wider hover:border-[#C8FF00]/40 transition-all flex items-center space-x-2"
+              className="px-6 py-3.5 rounded-xl bg-[#080A0C] border border-white/10 text-neutral-200 font-bold text-xs uppercase tracking-wider hover:border-[#C8FF00]/50 transition-all flex items-center space-x-2"
             >
-              <BarChart3 className="w-4 h-4 text-[#C8FF00]" />
-              <span>DB Insights & SQL</span>
+              <Code className="w-4 h-4 text-[#C8FF00]" />
+              <span>Interactive SQL Executor</span>
+            </Link>
+
+            <Link
+              to="/sports"
+              className="px-6 py-3.5 rounded-xl bg-white/5 border border-white/10 text-neutral-300 font-bold text-xs uppercase tracking-wider hover:bg-white/10 transition-all flex items-center space-x-2"
+            >
+              <Trophy className="w-4 h-4 text-[#39FF88]" />
+              <span>Sports Console</span>
             </Link>
           </div>
         </div>
 
-        {/* Live Database Metrics Counters */}
+        {/* Live Database Metrics Telemetry Bar */}
         {metrics && (
-          <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-white/10">
-            <div className="p-4 rounded-xl bg-[#080A0C] border border-white/10 group hover:border-[#C8FF00]/30 transition-colors">
-              <div className="flex items-center space-x-2 text-neutral-400 mb-1 font-mono">
+          <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-white/10 font-mono">
+            <div className="p-4 rounded-xl bg-[#080A0C] border border-white/10 group hover:border-[#C8FF00]/40 transition-colors">
+              <div className="flex items-center space-x-2 text-neutral-400 mb-1">
                 <Trophy className="w-4 h-4 text-[#C8FF00]" />
-                <span className="text-xs uppercase font-bold text-neutral-400">Total Sports</span>
+                <span className="text-xs uppercase font-bold text-neutral-400">Sports</span>
               </div>
               <span className="text-3xl font-display font-black text-white group-hover:text-[#C8FF00] transition-colors">{metrics.total_sports}</span>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#080A0C] border border-white/10 group hover:border-[#C8FF00]/30 transition-colors">
-              <div className="flex items-center space-x-2 text-neutral-400 mb-1 font-mono">
+            <div className="p-4 rounded-xl bg-[#080A0C] border border-white/10 group hover:border-[#C8FF00]/40 transition-colors">
+              <div className="flex items-center space-x-2 text-neutral-400 mb-1">
                 <Shield className="w-4 h-4 text-[#39FF88]" />
-                <span className="text-xs uppercase font-bold text-neutral-400">Registered Teams</span>
+                <span className="text-xs uppercase font-bold text-neutral-400">Teams</span>
               </div>
               <span className="text-3xl font-display font-black text-white group-hover:text-[#39FF88] transition-colors">{metrics.total_teams}</span>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#080A0C] border border-white/10 group hover:border-[#C8FF00]/30 transition-colors">
-              <div className="flex items-center space-x-2 text-neutral-400 mb-1 font-mono">
+            <div className="p-4 rounded-xl bg-[#080A0C] border border-white/10 group hover:border-[#C8FF00]/40 transition-colors">
+              <div className="flex items-center space-x-2 text-neutral-400 mb-1">
                 <Users className="w-4 h-4 text-[#C8FF00]" />
                 <span className="text-xs uppercase font-bold text-neutral-400">Athletes</span>
               </div>
               <span className="text-3xl font-display font-black text-white group-hover:text-[#C8FF00] transition-colors">{metrics.total_players}</span>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#080A0C] border border-white/10 group hover:border-[#C8FF00]/30 transition-colors">
-              <div className="flex items-center space-x-2 text-neutral-400 mb-1 font-mono">
+            <div className="p-4 rounded-xl bg-[#080A0C] border border-white/10 group hover:border-[#C8FF00]/40 transition-colors">
+              <div className="flex items-center space-x-2 text-neutral-400 mb-1">
                 <Activity className="w-4 h-4 text-[#FFB84D]" />
-                <span className="text-xs uppercase font-bold text-neutral-400">Total Matches</span>
+                <span className="text-xs uppercase font-bold text-neutral-400">Matches</span>
               </div>
               <span className="text-3xl font-display font-black text-white group-hover:text-[#FFB84D] transition-colors">{metrics.total_matches}</span>
             </div>
@@ -123,7 +133,56 @@ export default function Home() {
         )}
       </section>
 
-      {/* Featured Sports Grid */}
+      {/* College DBMS Viva Quick Guide Section */}
+      <section className="bg-[#101316] p-8 rounded-3xl border border-white/10 space-y-6 shadow-2xl">
+        <div className="flex items-center justify-between">
+          <div>
+            <span className="text-[10px] font-mono font-bold text-[#C8FF00] uppercase tracking-widest block">FOR EVALUATORS & VIVA EXAMINERS</span>
+            <h2 className="text-2xl font-display font-extrabold text-neutral-100 uppercase tracking-tight mt-1">
+              DBMS Viva Evaluation Shortcuts
+            </h2>
+          </div>
+          <span className="px-3 py-1 rounded bg-[#39FF88]/10 text-[#39FF88] border border-[#39FF88]/30 font-mono text-xs font-bold uppercase">
+            3NF Verified
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 font-mono text-xs">
+          <Link to="/database-insights" className="p-4 rounded-xl bg-[#080A0C] border border-white/10 hover:border-[#C8FF00] transition-all space-y-2 group">
+            <div className="w-8 h-8 rounded bg-[#C8FF00]/10 text-[#C8FF00] flex items-center justify-center">
+              <Database className="w-4 h-4" />
+            </div>
+            <h4 className="font-bold text-white group-hover:text-[#C8FF00]">1. SQL & Architecture</h4>
+            <p className="text-[11px] text-neutral-400 font-sans">Run live SQL INNER JOINs, GROUP BY, and view 3-tier architecture.</p>
+          </Link>
+
+          <Link to="/login" className="p-4 rounded-xl bg-[#080A0C] border border-white/10 hover:border-[#39FF88] transition-all space-y-2 group">
+            <div className="w-8 h-8 rounded bg-[#39FF88]/10 text-[#39FF88] flex items-center justify-center">
+              <Lock className="w-4 h-4" />
+            </div>
+            <h4 className="font-bold text-white group-hover:text-[#39FF88]">2. Admin Panel CRUD</h4>
+            <p className="text-[11px] text-neutral-400 font-sans">Click "Demo Admin" to manage players, teams, matches & statistics.</p>
+          </Link>
+
+          <Link to="/reports" className="p-4 rounded-xl bg-[#080A0C] border border-white/10 hover:border-[#FFB84D] transition-all space-y-2 group">
+            <div className="w-8 h-8 rounded bg-[#FFB84D]/10 text-[#FFB84D] flex items-center justify-center">
+              <FileText className="w-4 h-4" />
+            </div>
+            <h4 className="font-bold text-white group-hover:text-[#FFB84D]">3. CSV Data Exporter</h4>
+            <p className="text-[11px] text-neutral-400 font-sans">Export sports telemetry datasets to CSV files for database audit.</p>
+          </Link>
+
+          <Link to="/players" className="p-4 rounded-xl bg-[#080A0C] border border-white/10 hover:border-[#C8FF00] transition-all space-y-2 group">
+            <div className="w-8 h-8 rounded bg-[#C8FF00]/10 text-[#C8FF00] flex items-center justify-center">
+              <Users className="w-4 h-4" />
+            </div>
+            <h4 className="font-bold text-white group-hover:text-[#C8FF00]">4. Athlete Roster</h4>
+            <p className="text-[11px] text-neutral-400 font-sans">Explore player statistics, positions, team links, and performance.</p>
+          </Link>
+        </div>
+      </section>
+
+      {/* Featured Sports Directory */}
       <section className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
@@ -148,7 +207,7 @@ export default function Home() {
                   <Trophy className="w-6 h-6" />
                 </div>
                 <h3 className="text-lg font-display font-extrabold text-neutral-100 group-hover:text-[#C8FF00] transition-colors">{sport.name}</h3>
-                <p className="text-xs text-neutral-400 mt-2 line-clamp-2">{sport.description}</p>
+                <p className="text-xs text-neutral-400 mt-2 line-clamp-2 font-sans">{sport.description}</p>
               </div>
 
               <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-neutral-400">
@@ -209,7 +268,7 @@ export default function Home() {
 
       </section>
 
-      {/* Top Performers Leaderboard Preview */}
+      {/* Star Athletes Leaderboard Preview */}
       {topPlayers.length > 0 && (
         <section className="bg-[#101316] p-8 rounded-3xl border border-white/10 space-y-6 shadow-2xl">
           <div className="flex items-center justify-between">
