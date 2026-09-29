@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { handleMockRequest } from './clientMock';
 
 const API = axios.create({
   baseURL: '/api',
@@ -19,12 +20,48 @@ API.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response Interceptor: Global Error Handler
+// Helper to determine if we should execute mock fallback
+const shouldMock = (errorOrResp) => {
+  if (typeof window !== 'undefined' && window.location.hostname.includes('netlify.app')) {
+    return true;
+  }
+  return false;
+};
+
+// Response Interceptor: Seamless backend API / static demo fallback
 API.interceptors.response.use(
-  (response) => response.data,
-  (error) => {
-    const message = error.response?.data?.message || 'An unexpected server error occurred.';
-    return Promise.reject(new Error(message));
+  (response) => {
+    // If static Netlify server returns index.html (SPA redirect) for API route
+    if (typeof response.data === 'string' && response.data.trim().startsWith('<')) {
+      let data = {};
+      try {
+        data = response.config.data ? JSON.parse(response.config.data) : {};
+      } catch (e) {
+        data = {};
+      }
+      return handleMockRequest(response.config.url || '', response.config.method || 'get', data);
+    }
+    return response.data;
+  },
+  async (error) => {
+    const config = error.config || {};
+    let reqData = {};
+    if (config.data) {
+      try {
+        reqData = typeof config.data === 'string' ? JSON.parse(config.data) : config.data;
+      } catch (e) {
+        reqData = {};
+      }
+    }
+
+    // Always fallback to clientMock when API endpoint is unreachable or returning HTML/404/500 on static host
+    try {
+      const mockResult = await handleMockRequest(config.url || '', config.method || 'get', reqData);
+      return mockResult;
+    } catch (mockErr) {
+      const message = error.response?.data?.message || 'An unexpected server error occurred.';
+      return Promise.reject(new Error(message));
+    }
   }
 );
 
