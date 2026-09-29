@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { 
-  LayoutDashboard, Trophy, Shield, Users, UserCheck, Calendar, MapPin, Activity, BarChart2, UserCog, ArrowLeft, LogOut, FileCheck, Database
+  LayoutDashboard, Trophy, Shield, Users, UserCheck, Calendar, MapPin, Activity, BarChart2, UserCog, ArrowLeft, LogOut, FileCheck, Database, Zap
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -13,9 +13,9 @@ export default function AdminLayout() {
   if (!user || !isAdmin) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center space-y-4">
-        <h2 className="text-2xl font-bold text-rose-400">Access Denied</h2>
-        <p className="text-xs text-slate-400">You must be logged in as an Administrator to access this section.</p>
-        <Link to="/login" className="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold">
+        <h2 className="text-2xl font-display font-bold text-[#FF4D5A]">Access Denied</h2>
+        <p className="text-xs text-neutral-400">You must be logged in as an Administrator to access this section.</p>
+        <Link to="/login" className="px-5 py-2.5 bg-[#C8FF00] text-black rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#b5e600]">
           Go to Login Page
         </Link>
       </div>
@@ -39,16 +39,18 @@ export default function AdminLayout() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-4">
-      {/* Sidebar Navigation */}
+      {/* Sidebar Navigation - Futuristic Sports Command Center */}
       <aside className="lg:col-span-3 space-y-4">
-        <div className="glass-panel p-6 rounded-3xl border border-slate-800 space-y-6">
+        <div className="bg-[#101316] p-5 rounded-2xl border border-white/10 shadow-2xl space-y-6">
           
-          <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+          <div className="flex items-center justify-between pb-4 border-b border-white/10">
             <div>
-              <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block">Admin Control</span>
-              <h2 className="text-lg font-black text-slate-100">{user.name}</h2>
+              <span className="text-[10px] font-mono font-bold text-[#C8FF00] uppercase tracking-widest block flex items-center gap-1">
+                <Zap className="w-3 h-3" /> COMMAND CENTER
+              </span>
+              <h2 className="text-base font-display font-extrabold text-neutral-100 mt-0.5">{user.name}</h2>
             </div>
-            <Link to="/" title="Exit to main site" className="p-2 text-slate-400 hover:text-white rounded-lg bg-slate-900 border border-slate-800">
+            <Link to="/" title="Exit to main site" className="p-2 text-neutral-400 hover:text-[#C8FF00] rounded-lg bg-[#080A0C] border border-white/10 transition-colors">
               <ArrowLeft className="w-4 h-4" />
             </Link>
           </div>
@@ -61,26 +63,29 @@ export default function AdminLayout() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center space-x-3 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-mono tracking-wide transition-all ${
                     isActive
-                      ? 'bg-gradient-to-r from-amber-500/20 to-indigo-600/20 text-amber-300 border border-amber-500/30'
-                      : 'text-slate-400 hover:text-white hover:bg-slate-900'
+                      ? 'bg-[#C8FF00]/10 text-[#C8FF00] border-l-4 border-[#C8FF00] font-bold shadow-[0_0_15px_rgba(200,255,0,0.1)]'
+                      : 'text-neutral-400 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  <Icon className="w-4 h-4 text-amber-400" />
-                  <span>{item.name}</span>
+                  <div className="flex items-center space-x-3">
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-[#C8FF00]' : 'text-neutral-500'}`} />
+                    <span>{item.name}</span>
+                  </div>
+                  {isActive && <div className="w-1.5 h-1.5 rounded-full bg-[#C8FF00] animate-pulse" />}
                 </Link>
               );
             })}
           </nav>
 
-          <div className="pt-4 border-t border-slate-800">
+          <div className="pt-4 border-t border-white/10">
             <button
               onClick={() => {
                 logout();
                 navigate('/login');
               }}
-              className="w-full flex items-center justify-center space-x-2 py-2 rounded-xl bg-rose-500/10 text-rose-400 text-xs font-semibold hover:bg-rose-500/20 transition-all border border-rose-500/20"
+              className="w-full flex items-center justify-center space-x-2 py-2.5 rounded-xl bg-[#FF4D5A]/10 text-[#FF4D5A] text-xs font-bold uppercase tracking-wider hover:bg-[#FF4D5A]/20 transition-all border border-[#FF4D5A]/20"
             >
               <LogOut className="w-4 h-4" />
               <span>Sign Out Admin</span>

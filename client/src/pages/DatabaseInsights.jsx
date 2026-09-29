@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Database, Server, Cpu, Play, Code, CheckCircle2, Shield, Activity, Layers, Terminal } from 'lucide-react';
-import { statsAPI, sportsAPI, teamsAPI, playersAPI, matchesAPI, tournamentsAPI } from '../services/api';
+import { Database, Server, Cpu, Play, Code, Shield, Activity, Layers, Terminal } from 'lucide-react';
+import { statsAPI, sportsAPI, matchesAPI } from '../services/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Breadcrumbs from '../components/Breadcrumbs';
 
@@ -109,59 +109,81 @@ export default function DatabaseInsights() {
 
       {/* Header Banner */}
       <div>
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold mb-2">
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#080A0C] border border-[#C8FF00]/30 text-[#C8FF00] text-xs font-mono font-bold tracking-wider uppercase mb-2">
           <Terminal className="w-3.5 h-3.5" />
           <span>DBMS Academic Viva Demonstrator</span>
         </div>
-        <h1 className="text-3xl font-extrabold text-slate-100 flex items-center space-x-2">
-          <Database className="w-7 h-7 text-indigo-400" />
+        <h1 className="text-3xl font-display font-extrabold text-neutral-100 uppercase tracking-tight flex items-center space-x-2">
+          <Database className="w-7 h-7 text-[#C8FF00]" />
           <span>Database Architecture & Insights</span>
         </h1>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs font-mono text-neutral-400 mt-1">
           Demonstrate relational 3NF normalization, 3-tier architecture, foreign keys, and live SQL query execution to viva evaluators.
         </p>
       </div>
 
-      {/* 3-Tier Architecture Explanation Card */}
-      <div className="glass-panel p-8 rounded-3xl border border-slate-800 space-y-6">
-        <h2 className="text-xl font-bold text-slate-100 flex items-center space-x-2">
-          <Layers className="w-5 h-5 text-indigo-400" />
-          <span>System 3-Tier Architecture</span>
+      {/* Database Architecture Node visualizer - Section 25 */}
+      <div className="bg-[#101316] p-8 rounded-3xl border border-white/10 space-y-6 shadow-2xl">
+        <h2 className="text-xl font-display font-extrabold text-neutral-100 uppercase tracking-tight flex items-center space-x-2">
+          <Layers className="w-5 h-5 text-[#C8FF00]" />
+          <span>Relational Entity Schema Nodes (3NF Model)</span>
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Nodes Visualizer */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-center font-mono">
+          <div className="p-4 rounded-xl bg-[#080A0C] border border-[#C8FF00]/30 hover:border-[#C8FF00] transition-colors">
+            <span className="text-[10px] text-[#C8FF00] block uppercase font-bold">Node 1</span>
+            <span className="text-sm font-bold text-white block mt-1">PLAYERS</span>
+            <span className="text-[9px] text-neutral-500 block mt-1">PK: player_id</span>
+          </div>
+          <div className="hidden md:flex items-center justify-center text-[#C8FF00]">→</div>
+          <div className="p-4 rounded-xl bg-[#080A0C] border border-[#39FF88]/30 hover:border-[#39FF88] transition-colors">
+            <span className="text-[10px] text-[#39FF88] block uppercase font-bold">Node 2</span>
+            <span className="text-sm font-bold text-white block mt-1">TEAMS</span>
+            <span className="text-[9px] text-neutral-500 block mt-1">FK: sport_id</span>
+          </div>
+          <div className="hidden md:flex items-center justify-center text-[#39FF88]">→</div>
+          <div className="p-4 rounded-xl bg-[#080A0C] border border-[#FFB84D]/30 hover:border-[#FFB84D] transition-colors">
+            <span className="text-[10px] text-[#FFB84D] block uppercase font-bold">Node 3</span>
+            <span className="text-sm font-bold text-white block mt-1">MATCHES</span>
+            <span className="text-[9px] text-neutral-500 block mt-1">FK: venue_id</span>
+          </div>
+        </div>
+
+        {/* 3-Tier Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 font-mono">
           {/* Tier 1 */}
-          <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
-            <div className="flex items-center space-x-2 text-indigo-400 font-bold text-sm">
+          <div className="p-5 rounded-2xl bg-[#080A0C] border border-white/10 space-y-2">
+            <div className="flex items-center space-x-2 text-[#C8FF00] font-bold text-xs uppercase">
               <Cpu className="w-4 h-4" />
               <span>1. Presentation Tier</span>
             </div>
-            <h4 className="font-semibold text-slate-200 text-xs">React.js Single Page App (Vite)</h4>
-            <p className="text-[11px] text-slate-400 leading-relaxed">
+            <h4 className="font-bold text-neutral-200 text-xs">React.js Single Page App (Vite)</h4>
+            <p className="text-[11px] text-neutral-400 leading-relaxed font-sans">
               Renders responsive client UI components, manages JWT state, and communicates with backend using Axios HTTP calls.
             </p>
           </div>
 
           {/* Tier 2 */}
-          <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
-            <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
+          <div className="p-5 rounded-2xl bg-[#080A0C] border border-white/10 space-y-2">
+            <div className="flex items-center space-x-2 text-[#39FF88] font-bold text-xs uppercase">
               <Server className="w-4 h-4" />
               <span>2. Application Tier</span>
             </div>
-            <h4 className="font-semibold text-slate-200 text-xs">Express.js REST API</h4>
-            <p className="text-[11px] text-slate-400 leading-relaxed">
-              Handles JWT authorization, inputs validation, parameterized query execution via `mysql2/promise`, and transaction safety.
+            <h4 className="font-bold text-neutral-200 text-xs">Express.js REST API</h4>
+            <p className="text-[11px] text-neutral-400 leading-relaxed font-sans">
+              Handles JWT authorization, input validation, parameterized query execution via `mysql2/promise`, and transaction safety.
             </p>
           </div>
 
           {/* Tier 3 */}
-          <div className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
-            <div className="flex items-center space-x-2 text-amber-400 font-bold text-sm">
+          <div className="p-5 rounded-2xl bg-[#080A0C] border border-white/10 space-y-2">
+            <div className="flex items-center space-x-2 text-[#FFB84D] font-bold text-xs uppercase">
               <Database className="w-4 h-4" />
               <span>3. Data Tier</span>
             </div>
-            <h4 className="font-semibold text-slate-200 text-xs">MySQL 8.0 Database</h4>
-            <p className="text-[11px] text-slate-400 leading-relaxed">
+            <h4 className="font-bold text-neutral-200 text-xs">MySQL 8.0 Database</h4>
+            <p className="text-[11px] text-neutral-400 leading-relaxed font-sans">
               Stores 12 normalized relational tables, enforces PK/FK referential integrity constraints, B-Tree indexes, and view logic.
             </p>
           </div>
@@ -170,8 +192,8 @@ export default function DatabaseInsights() {
 
       {/* Relational Table Telemetry Record Counts */}
       <div className="space-y-4">
-        <h2 className="text-xl font-bold text-slate-100 flex items-center space-x-2">
-          <Activity className="w-5 h-5 text-emerald-400" />
+        <h2 className="text-xl font-display font-extrabold text-neutral-100 uppercase tracking-tight flex items-center space-x-2">
+          <Activity className="w-5 h-5 text-[#39FF88]" />
           <span>Live Database Table Telemetry (Record Counts)</span>
         </h2>
 
@@ -190,44 +212,44 @@ export default function DatabaseInsights() {
             { label: 'users', count: metrics?.total_users || 0 },
             { label: 'team_players', count: 10 }
           ].map((item, idx) => (
-            <div key={idx} className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-center">
-              <span className="text-[11px] font-mono text-indigo-400 block truncate">{item.label}</span>
-              <span className="text-xl font-black text-slate-100 mt-1 block">{item.count}</span>
+            <div key={idx} className="p-3 rounded-xl bg-[#101316] border border-white/10 text-center font-mono">
+              <span className="text-[11px] text-[#C8FF00] block truncate">{item.label}</span>
+              <span className="text-xl font-bold text-neutral-100 mt-1 block">{item.count}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Interactive SQL Query Executor for Evaluators */}
-      <div className="glass-panel p-8 rounded-3xl border border-slate-800 space-y-6">
+      <div className="bg-[#101316] p-8 rounded-3xl border border-white/10 space-y-6 shadow-2xl">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold text-slate-100 flex items-center space-x-2">
-              <Code className="w-5 h-5 text-amber-400" />
+            <h2 className="text-xl font-display font-extrabold text-neutral-100 uppercase tracking-tight flex items-center space-x-2">
+              <Code className="w-5 h-5 text-[#FFB84D]" />
               <span>Interactive SQL Query Executor (Viva Demonstrator)</span>
             </h2>
-            <p className="text-xs text-slate-400 mt-1">Select a SQL query below to demonstrate JOINs, Aggregations, and HAVING clauses</p>
+            <p className="text-xs font-mono text-neutral-400 mt-1">Select a SQL query below to demonstrate JOINs, Aggregations, and HAVING clauses</p>
           </div>
 
           <button
             onClick={() => runSampleQuery(activeQueryIndex)}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl flex items-center space-x-1.5 shadow-md shadow-emerald-600/20"
+            className="px-4 py-2 bg-[#C8FF00] hover:bg-[#b5e600] text-black font-mono font-bold text-xs rounded-xl flex items-center space-x-1.5 shadow-md uppercase tracking-wider"
           >
-            <Play className="w-3.5 h-3.5 fill-white" />
+            <Play className="w-3.5 h-3.5 fill-black" />
             <span>Execute SQL Query</span>
           </button>
         </div>
 
         {/* Query Selector Buttons */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono">
           {sampleQueries.map((q, idx) => (
             <button
               key={idx}
               onClick={() => runSampleQuery(idx)}
               className={`p-3 rounded-xl text-left text-xs font-semibold transition-all border ${
                 activeQueryIndex === idx
-                  ? 'bg-indigo-600/20 text-indigo-300 border-indigo-500/40 shadow-inner'
-                  : 'bg-slate-900/60 text-slate-400 border-slate-800 hover:text-slate-200'
+                  ? 'bg-[#C8FF00]/10 text-[#C8FF00] border-[#C8FF00]/40 font-bold'
+                  : 'bg-[#080A0C] text-neutral-400 border-white/10 hover:text-white'
               }`}
             >
               {q.title}
@@ -236,33 +258,33 @@ export default function DatabaseInsights() {
         </div>
 
         {/* Code View */}
-        <div className="p-4 rounded-2xl bg-slate-950 font-mono text-xs text-indigo-300 border border-slate-800 overflow-x-auto">
+        <div className="p-4 rounded-2xl bg-[#080A0C] font-mono text-xs text-[#C8FF00] border border-white/10 overflow-x-auto">
           <pre>{sampleQueries[activeQueryIndex].sql}</pre>
         </div>
 
         {/* Query Results Table */}
-        <div className="space-y-2">
-          <span className="text-xs font-bold text-slate-300 block uppercase tracking-wider">
+        <div className="space-y-2 font-mono">
+          <span className="text-xs font-bold text-neutral-300 block uppercase tracking-wider">
             Execution Result ({queryResult.length} rows returned)
           </span>
 
           {queryExecuting ? (
             <LoadingSpinner text="Executing SQL statement on MySQL instance..." />
           ) : queryResult.length === 0 ? (
-            <div className="p-6 text-center text-slate-400 text-xs">No records returned.</div>
+            <div className="p-6 text-center text-neutral-400 text-xs">No records returned.</div>
           ) : (
-            <div className="rounded-2xl overflow-hidden border border-slate-800 bg-slate-900/60">
-              <table className="w-full text-left text-xs text-slate-300">
-                <thead className="bg-slate-950 text-slate-400 uppercase font-semibold border-b border-slate-800">
+            <div className="rounded-2xl overflow-hidden border border-white/10 bg-[#080A0C]">
+              <table className="w-full text-left text-xs text-neutral-300">
+                <thead className="bg-[#101316] text-[#C8FF00] uppercase font-mono font-bold border-b border-white/10">
                   <tr>
                     {Object.keys(queryResult[0]).map((key) => (
                       <th key={key} className="p-3">{key.replace(/_/g, ' ')}</th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60">
+                <tbody className="divide-y divide-white/10">
                   {queryResult.map((row, idx) => (
-                    <tr key={idx} className="hover:bg-slate-800/40">
+                    <tr key={idx} className="hover:bg-white/5">
                       {Object.values(row).map((val, i) => (
                         <td key={i} className="p-3">
                           {typeof val === 'object' && val !== null ? JSON.stringify(val) : String(val ?? 'N/A')}
